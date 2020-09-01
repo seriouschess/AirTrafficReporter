@@ -10,6 +10,8 @@ using MainApp.Models;
 // Middleware Imports
 using Microsoft.EntityFrameworkCore;
 using MainApp.Queries;
+using System.Linq;
+using MainApp.AirportExcell;
 
 namespace MainApp
 {
@@ -45,6 +47,18 @@ namespace MainApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //Initialise Database with Airports
+            using (IServiceScope serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                DatabaseContext context = serviceScope.ServiceProvider.GetRequiredService<DatabaseContext>();
+
+                if(context.Airports.Take(1).ToList().Count == 0){ //check if DB was initialised already
+                    Querier dbQuery = new Querier(context);
+                    AirportDatabaseImporter importer = new AirportDatabaseImporter(env, dbQuery);
+                    importer.import();
+                }
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

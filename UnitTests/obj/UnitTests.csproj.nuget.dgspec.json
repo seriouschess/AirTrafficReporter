@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bigch\\RelativityCapstone\\UnitTests\\UnitTests.csproj": {}
+    "c:\\Users\\bigch\\relativitycapstone\\UnitTests\\UnitTests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bigch\\RelativityCapstone\\MainApp\\MainApp.csproj": {
+    "c:\\Users\\bigch\\relativitycapstone\\MainApp\\MainApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bigch\\RelativityCapstone\\MainApp\\MainApp.csproj",
+        "projectUniqueName": "c:\\Users\\bigch\\relativitycapstone\\MainApp\\MainApp.csproj",
         "projectName": "MainApp",
-        "projectPath": "C:\\Users\\bigch\\RelativityCapstone\\MainApp\\MainApp.csproj",
+        "projectPath": "c:\\Users\\bigch\\relativitycapstone\\MainApp\\MainApp.csproj",
         "packagesPath": "C:\\Users\\bigch\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bigch\\RelativityCapstone\\MainApp\\obj\\",
+        "outputPath": "c:\\Users\\bigch\\relativitycapstone\\MainApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -39,6 +39,10 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "ExcelDataReader": {
+              "target": "Package",
+              "version": "[3.6.0, )"
+            },
             "FluentValidation": {
               "target": "Package",
               "version": "[9.2.0, )"
@@ -78,14 +82,14 @@
         }
       }
     },
-    "C:\\Users\\bigch\\RelativityCapstone\\UnitTests\\UnitTests.csproj": {
+    "c:\\Users\\bigch\\relativitycapstone\\UnitTests\\UnitTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bigch\\RelativityCapstone\\UnitTests\\UnitTests.csproj",
+        "projectUniqueName": "c:\\Users\\bigch\\relativitycapstone\\UnitTests\\UnitTests.csproj",
         "projectName": "UnitTests",
-        "projectPath": "C:\\Users\\bigch\\RelativityCapstone\\UnitTests\\UnitTests.csproj",
+        "projectPath": "c:\\Users\\bigch\\relativitycapstone\\UnitTests\\UnitTests.csproj",
         "packagesPath": "C:\\Users\\bigch\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bigch\\RelativityCapstone\\UnitTests\\obj\\",
+        "outputPath": "c:\\Users\\bigch\\relativitycapstone\\UnitTests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -102,8 +106,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\bigch\\RelativityCapstone\\MainApp\\MainApp.csproj": {
-                "projectPath": "C:\\Users\\bigch\\RelativityCapstone\\MainApp\\MainApp.csproj"
+              "c:\\Users\\bigch\\relativitycapstone\\MainApp\\MainApp.csproj": {
+                "projectPath": "c:\\Users\\bigch\\relativitycapstone\\MainApp\\MainApp.csproj"
               }
             }
           }

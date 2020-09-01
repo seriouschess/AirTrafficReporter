@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "ExcelDataReader/3.6.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/ExcelDataReader.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/ExcelDataReader.dll": {}
+        }
+      },
       "FluentValidation/9.2.0": {
         "type": "package",
         "compile": {
@@ -2129,6 +2138,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "ExcelDataReader": "3.6.0",
           "FluentValidation": "9.2.0",
           "Microsoft.AspNetCore.SpaServices.Extensions": "3.1.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.7",
@@ -2147,6 +2157,29 @@
     }
   },
   "libraries": {
+    "ExcelDataReader/3.6.0": {
+      "sha512": "eXyxTwG7EEWpgQX3juZ2KcndqTqm/ydx9GXS2lUiMJU54U4h5eXdygRtVgINv0t60ezPWEb+lL7uM7Q+wm5BBA==",
+      "type": "package",
+      "path": "exceldatareader/3.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "exceldatareader.3.6.0.nupkg.sha512",
+        "exceldatareader.nuspec",
+        "lib/net20/ExcelDataReader.dll",
+        "lib/net20/ExcelDataReader.pdb",
+        "lib/net20/ExcelDataReader.xml",
+        "lib/net45/ExcelDataReader.dll",
+        "lib/net45/ExcelDataReader.pdb",
+        "lib/net45/ExcelDataReader.xml",
+        "lib/netstandard1.3/ExcelDataReader.dll",
+        "lib/netstandard1.3/ExcelDataReader.pdb",
+        "lib/netstandard1.3/ExcelDataReader.xml",
+        "lib/netstandard2.0/ExcelDataReader.dll",
+        "lib/netstandard2.0/ExcelDataReader.pdb",
+        "lib/netstandard2.0/ExcelDataReader.xml"
+      ]
+    },
     "FluentValidation/9.2.0": {
       "sha512": "LNUzNXWlBQavU/eB9pf4Tg8TTWgCw8E85OBA1GJv4xkdwuer9FuFLHTBjcYX+gGBkPFc2G+3utzEA4aMhUOL3w==",
       "type": "package",
@@ -7215,11 +7248,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\bigch\\RelativityCapstone\\UnitTests\\UnitTests.csproj",
+      "projectUniqueName": "c:\\Users\\bigch\\relativitycapstone\\UnitTests\\UnitTests.csproj",
       "projectName": "UnitTests",
-      "projectPath": "C:\\Users\\bigch\\RelativityCapstone\\UnitTests\\UnitTests.csproj",
+      "projectPath": "c:\\Users\\bigch\\relativitycapstone\\UnitTests\\UnitTests.csproj",
       "packagesPath": "C:\\Users\\bigch\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\bigch\\RelativityCapstone\\UnitTests\\obj\\",
+      "outputPath": "c:\\Users\\bigch\\relativitycapstone\\UnitTests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -7236,8 +7269,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\bigch\\RelativityCapstone\\MainApp\\MainApp.csproj": {
-              "projectPath": "C:\\Users\\bigch\\RelativityCapstone\\MainApp\\MainApp.csproj"
+            "c:\\Users\\bigch\\relativitycapstone\\MainApp\\MainApp.csproj": {
+              "projectPath": "c:\\Users\\bigch\\relativitycapstone\\MainApp\\MainApp.csproj"
             }
           }
         }

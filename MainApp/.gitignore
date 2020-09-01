@@ -229,3 +229,11 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+#Appsettings.json
+.vscode/
+bin/
+obj/
+appsettings.json
+appsettings.Development.json
+Migrations/
