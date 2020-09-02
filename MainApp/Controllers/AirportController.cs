@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,27 +13,29 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using MainApp.Models;
+using MainApp.dtos;
 
 namespace MainApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class AirportController : ControllerBase
     {
         static HttpClient client = new HttpClient();
-        WeatherForecastControllerMethods methods;
+        AirportControllerMethods methods;
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<AirportController> _logger;
 
         private IWebHostEnvironment _env;
 
         private Querier _dbQuery;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, Querier dbQuery, IWebHostEnvironment env)
+        public AirportController(ILogger<AirportController> logger, Querier dbQuery, IWebHostEnvironment env)
         {
             _dbQuery = dbQuery;
             _env = env;
-            methods = new WeatherForecastControllerMethods(dbQuery);
+            methods = new AirportControllerMethods(dbQuery, client);
             _logger = logger;
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
@@ -41,16 +43,16 @@ namespace MainApp.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            return methods.GetMethod();
+        [Route("test")]
+        public async Task<ActionResult<WeatherForecast>> RunTest(){
+            WeatherInformation weather_api = new WeatherInformation(client);
+            return await weather_api.GetWeatherForLocation(25,30);
         }
 
         [HttpGet]
-        [Route("test")]
-        public async Task<ActionResult<List<WeatherForecast>>> RunTest(){
-            WeatherApiCaller weather_api = new WeatherApiCaller(client);
-            return await weather_api.GetWeatherForLocation(25,30);
+        [Route("full/{airport_id}")]
+        public async Task<ActionResult<AirportDto>> GetFullAirportWithId(int airport_id){
+            return await methods.GetFullAirportWithIdMethod( airport_id );
         }
     }
 }

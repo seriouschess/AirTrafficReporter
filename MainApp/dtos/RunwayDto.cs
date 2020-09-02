@@ -1,14 +1,9 @@
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace MainApp.Models
+namespace MainApp.dtos
 {
-    public class Runway
+    public class RunwayDto
     {
         public int RunwayId {get;set;}
-        public int AirportId {get;set;}
         
-        [ForeignKey("AirportId")]
-        public Airport Airport {get;set;}
         public string RunwayName {get;set;} //Also known as le_ident in the .csv
         public string RunwayMaterial {get;set;}
         public int RunwayLengthFt {get;set;} //also applies to helipads

@@ -2,6 +2,7 @@ using MainApp.Models;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using MainApp.dtos;
 
 namespace MainApp.Queries
 {
@@ -19,8 +20,54 @@ namespace MainApp.Queries
             dbContext.SaveChanges();
         }
 
+        //Add final airport?
+        public void AddFinalAirport(Airport NewAirport){
+            dbContext.Add( NewAirport );
+            dbContext.SaveChanges();
+        }
+
+
         public void AddRunway(Runway NewRunway){
             dbContext.Add( NewRunway );
+            dbContext.SaveChanges();
+        }
+
+        //add final runway?
+        public void AddFinalRunway(Runway NewRunway){
+            dbContext.Add( NewRunway );
+            dbContext.SaveChanges();
+        }
+
+        public void AddWeatherForecast(WeatherForecast NewWeatherForecast){
+            //no more than one forecast may exist per airport
+            List<WeatherForecast> FoundForecasts = dbContext.WeatherForecasts.Where(x => x.AirportId == NewWeatherForecast.AirportId).ToList();
+            if(FoundForecasts.Count == 0){
+                //add forecast
+                dbContext.Add( NewWeatherForecast );
+                dbContext.SaveChanges();
+            }
+            
+            if(FoundForecasts.Count == 1){
+                //update existing forecast
+                FoundForecasts[0].WeatherReports = NewWeatherForecast.WeatherReports;
+                FoundForecasts[0].UpdatedAt = DateTime.Now; 
+                dbContext.SaveChanges();
+            }
+
+            if(FoundForecasts.Count > 1){
+                //should never happen
+                throw new System.Exception(
+                    $"More than one forecast exists for Airport ID: {NewWeatherForecast.AirportId}. Module rewrite required.");
+            }            
+        }
+
+        public void DeleteWeatherForecast(WeatherForecast DoomedWeatherForecast){
+            dbContext.Remove(DoomedWeatherForecast);
+            dbContext.SaveChanges();
+        }
+
+        public void AddWeatherReport(WeatherReport NewWeatherReport){
+            dbContext.Add( NewWeatherReport );
             dbContext.SaveChanges();
         }
 
@@ -43,6 +90,58 @@ namespace MainApp.Queries
             } 
         }
 
+        public List<Airport> FindAirportByIncompleteNameTenMax( string incomplete_string ){
+            List<Airport> FoundAirports = dbContext.Airports.Where(x => x.AirportName.Contains(incomplete_string)).ToList();
+            return FoundAirports;
+        }
+
+        public Airport FindAirportWithForecastById(int airport_id ){
+              List<Airport> FoundAirport = dbContext.Airports.Where(x => x.AirportId == airport_id).Select(a => new Airport(){
+                AirportId = a.AirportId,
+                AirportName = a.AirportName,
+                Latitude = a.Latitude,
+                Longitude = a.Longitude,
+                WeatherForecast = dbContext.WeatherForecasts.Where(f => f.AirportId == airport_id).ToList()
+            }).ToList();
+            if(FoundAirport.Count != 1){
+                throw new System.ArgumentException("Airport Id Not Found.");
+            }else{
+                return FoundAirport[0];
+            }
+        }
+
+        public AirportDto FindFullAirportInformationById( int airport_id ){
+            List<AirportDto> FoundAirport = dbContext.Airports.Where(x => x.AirportId == airport_id).Select(a => new AirportDto(){
+                AirportId = a.AirportId,
+                AirportName = a.AirportName,
+                Latitude = a.Latitude,
+                Longitude = a.Longitude,
+                Runways = dbContext.Runways.Where(r => r.AirportId == airport_id).Select(ru => new RunwayDto(){
+                    RunwayId = ru.RunwayId,
+                    RunwayName = ru.RunwayName,
+                    RunwayLengthFt =ru.RunwayLengthFt,
+                    RunwayMaterial = ru.RunwayMaterial,
+                    LowHeadingDeg = ru.LowHeadingDeg
+                }).ToList(),
+                WeatherForecast = dbContext.WeatherForecasts.Where(f => f.AirportId == airport_id).Select(w => new WeatherForecastDto(){
+                    WeatherForecastId = w.WeatherForecastId,
+                    UpdatedAt = w.UpdatedAt,
+                    WeatherReports = dbContext.WeatherReports.Where(r => r.WeatherForecastId == w.WeatherForecastId).Select(re => new WeatherReportDto(){
+                        Temperature = re.Temperature,
+                        Description = re.Description,
+                        WindSpeed = re.WindSpeed,
+                        WindDirectionDeg = re.WindDirectionDeg,
+                        PredictionDatetime = re.PredictionDatetime
+                    }).ToList(),
+                }).ToList()
+            }).ToList();
+            if(FoundAirport.Count != 1){
+                throw new System.ArgumentException("Airport Id Not Found.");
+            }else{
+                return FoundAirport[0];
+            }
+        }
+
          public Runway FindRunwayById(int runway_id){
             List<Runway> FoundRunway = dbContext.Runways.Where(x => x.RunwayId == runway_id).ToList();
             if( FoundRunway.Count != 1 ){
@@ -51,17 +150,5 @@ namespace MainApp.Queries
                 return FoundRunway[0];
             } 
         }
-
-
-        // public Airport AddAirportConfirmation(Airport _NewAirport){
-        //     Airport NewAirport = new Airport();
-        //     NewAirport.AirportId = _NewAirport.AirportId;
-        //     NewAirport.Name = _NewAirport.Name;
-        //     NewAirport.Latitude = _NewAirport.Latitude;
-        //     NewAirport.Longitude = _NewAirport.Longitude;
-        //     dbContext.Add( NewAirport );
-        //     dbContext.SaveChanges();
-        //     return FindAirportByAirportId( NewAirport.AirportId );
-        // }
     }
 }

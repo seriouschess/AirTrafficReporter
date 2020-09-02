@@ -17,6 +17,6 @@ export class HttpService {
   }
 
   getWeather(weather:WeatherForecast[]):Observable<WeatherForecast[]>{
-    return this.http.get<WeatherForecast[]>(this.baseUrl + 'weatherforecast');
+    return null; //this.http.get<WeatherForecast[]>(this.baseUrl + 'WeatherReport');
   }
 }

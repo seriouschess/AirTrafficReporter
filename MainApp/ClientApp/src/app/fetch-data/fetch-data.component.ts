@@ -7,14 +7,14 @@ import{ HttpService } from '../Services/http-service.service';
   templateUrl: './fetch-data.component.html'
 })
 export class FetchDataComponent {
-  public forecasts: WeatherForecast[];
+  public forecasts: WeatherReport[];
 
   constructor(_httpClient: HttpService) {
     _httpClient.getWeather(this.forecasts).subscribe(res => this.forecasts = res);
   }
 }
 
-interface WeatherForecast {
+interface WeatherReport {
   date: string;
   temperatureC: number;
   temperatureF: number;
