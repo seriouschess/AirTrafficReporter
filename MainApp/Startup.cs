@@ -13,6 +13,9 @@ using MainApp.Queries;
 using System.Linq;
 using MainApp.AirportExcell;
 
+
+using MainApp.Configuration;
+
 namespace MainApp
 {
     public class Startup
@@ -20,6 +23,7 @@ namespace MainApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            ConfSettings.Configuration = Configuration;
         }
 
         public IConfiguration Configuration { get; }

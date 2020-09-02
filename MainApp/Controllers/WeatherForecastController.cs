@@ -8,6 +8,11 @@ using MainApp.Controllers.ControllerMethods;
 using MainApp.Queries;
 using Microsoft.AspNetCore.Hosting;
 using MainApp.AirportExcell;
+using MainApp.Weather;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace MainApp.Controllers
 {
@@ -15,6 +20,7 @@ namespace MainApp.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        static HttpClient client = new HttpClient();
         WeatherForecastControllerMethods methods;
 
         private readonly ILogger<WeatherForecastController> _logger;
@@ -29,6 +35,9 @@ namespace MainApp.Controllers
             _env = env;
             methods = new WeatherForecastControllerMethods(dbQuery);
             _logger = logger;
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+            new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         [HttpGet]
@@ -39,8 +48,9 @@ namespace MainApp.Controllers
 
         [HttpGet]
         [Route("test")]
-        public string RunTest(  ){
-            return "hi";
+        public async Task<ActionResult<List<WeatherForecast>>> RunTest(){
+            WeatherApiCaller weather_api = new WeatherApiCaller(client);
+            return await weather_api.GetWeatherForLocation(25,30);
         }
     }
 }
