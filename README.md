@@ -18,12 +18,13 @@ create a file called appsettings.json in the ./MainApp directory and add the fol
       "Microsoft.Hosting.Lifetime": "Information"
       }
     },
-"AllowedHosts": "*",
-"DBInfo":
-        {
-          "Name": "MySQLconnect",
-          "ConnectionString": "server=localhost;userid=fakeuser;password=fakepassword;port=3306;database=relativitycapstone;SslMode=None"
-        }
+  "AllowedHosts": "*",
+  "DBInfo":
+          {
+            "Name": "MySQLconnect",
+            "ConnectionString": "server=localhost;userid=fakeuser;password=fakepassword;port=3306;database=relativitycapstone;SslMode=None"
+          },
+  "WeatherApiKey": "<Your openweather.org api key here>"
 }
 ```
 
