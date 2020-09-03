@@ -21,6 +21,17 @@ namespace MainApp.Controllers.ControllerMethods
             dbQuery = _dbQuery;
         }
 
+        public ActionResult<List<Airport>> SearchAirportsMethod(string search_string){
+            Validator validator = new Validator();
+            string verdict = validator.ValidateString(search_string);
+            if( verdict == "valid"){
+                return dbQuery.FindAirportByIncompleteNameTenMax(search_string);
+            }else{
+                JsonResponse r = new JsonResponse(verdict);
+                return StatusCode(400, r);
+            }
+        }
+
         public async Task<ActionResult<string>> UpdateWeatherForAirportMethod(int airport_id){
             Airport FoundAirport;
             try{

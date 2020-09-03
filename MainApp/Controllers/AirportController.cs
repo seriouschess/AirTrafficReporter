@@ -50,6 +50,12 @@ namespace MainApp.Controllers
         }
 
         [HttpGet]
+        [Route("search/{search_string}")]
+        public ActionResult<List<Airport>> SearchAirports(string search_string){
+            return methods.SearchAirportsMethod( search_string );
+        }
+
+        [HttpGet]
         [Route("full/{airport_id}")]
         public async Task<ActionResult<AirportDto>> GetFullAirportWithId(int airport_id){
             return await methods.GetFullAirportWithIdMethod( airport_id );

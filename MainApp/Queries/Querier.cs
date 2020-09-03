@@ -91,7 +91,11 @@ namespace MainApp.Queries
         }
 
         public List<Airport> FindAirportByIncompleteNameTenMax( string incomplete_string ){
-            List<Airport> FoundAirports = dbContext.Airports.Where(x => x.AirportName.Contains(incomplete_string)).ToList();
+            //string lowercase_incomplete_string = incomplete_string.ToLower();
+
+            List<Airport> FoundAirports = dbContext.Airports.Where(
+                x => x.AirportName.Contains(incomplete_string, StringComparison.OrdinalIgnoreCase)).Take(10).ToList();
+
             return FoundAirports;
         }
 
