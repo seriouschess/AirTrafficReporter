@@ -8,6 +8,7 @@ using System.Net.Http;
 using MainApp.Weather;
 using System.Threading.Tasks;
 using MainApp.dtos;
+using MainApp.BusinessLogic;
 
 namespace MainApp.Controllers.ControllerMethods
 {
@@ -25,7 +26,8 @@ namespace MainApp.Controllers.ControllerMethods
             try{
                 FoundAirport = dbQuery.FindAirportWithForecastById(airport_id);
             }catch{
-                return StatusCode(400, "Invalid Airport Id");
+                JsonResponse r = new JsonResponse("Invalid Airport Id"); 
+                return StatusCode(400, r);
             }
 
             if(FoundAirport.WeatherForecast.Count > 0){ //verify weather cache
@@ -56,7 +58,16 @@ namespace MainApp.Controllers.ControllerMethods
                 return StatusCode(400, r);
             }
 
-            AirportDto FoundAirport = dbQuery.FindFullAirportInformationById(airport_id);
+            AirportDto FoundAirport;
+            try{
+                FoundAirport = dbQuery.FindFullAirportInformationById(airport_id);
+            }catch{
+                JsonResponse r = new JsonResponse("Invalid Airport Id"); 
+                return StatusCode(400, r);
+            }
+
+            RunwaySelector selector = new RunwaySelector();
+            selector.AssignOptimalRunwayToAirportDto(FoundAirport);
             return FoundAirport;
         }
     }

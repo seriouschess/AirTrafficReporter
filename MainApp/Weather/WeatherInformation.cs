@@ -45,7 +45,11 @@ namespace MainApp.Weather
                         throw new System.Exception("openweathermap.org api naming conventions have changed. Module requires update.");
                     }
 
-                    weather_reports.Add(report);
+                    if((report.PredictionDatetime.Hour == 12 && DateTime.Now.Day != report.PredictionDatetime.Day)
+                                             || weather_reports.Count == 0){ //add first forecast and every mid day forecast in sucessive days
+
+                        weather_reports.Add(report);
+                    }
                 }
 
                 //Export new Weather Forecast for Location

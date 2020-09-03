@@ -8,5 +8,6 @@ namespace MainApp.dtos
         public int RunwayLengthFt {get;set;} //also applies to helipads
         public int? LowHeadingDeg {get;set;} //Not listed for every runway (helipads)!
         public bool OptimalRunway{get;set;} = false;
+        public string RunwayDescription{get;set;} = "none";
     }
 }

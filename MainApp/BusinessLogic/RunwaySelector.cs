@@ -8,29 +8,55 @@ namespace MainApp.BusinessLogic
     {
         public RunwaySelector(){}
 
-        public bool ValidateRunway(){
-            bool t = true;
-            if(t){
-                return true;
+        public AirportDto AssignOptimalRunwayToAirportDto(AirportDto SubjectAirport){
+            if(SubjectAirport.Runways == null || SubjectAirport.Runways.Count == 0 ){
+                return SubjectAirport; //no runways, do nothing
             }else{
-                return false;
+                if(SubjectAirport.WeatherForecast[0] == null){
+                    throw new System.ArgumentException( "WeatherForecast required before optimal runway can be assigned" );
+                }
+                foreach(RunwayDto runway in SubjectAirport.Runways){ //reset all runways
+                    runway.OptimalRunway = false;
+                }
+                int wind_direction = SubjectAirport.WeatherForecast[0].WeatherReports[0].WindDirectionDeg;
+
+
+                List<int> converted_runways = ConvertRunways(SubjectAirport.Runways);
+
+                //helicopter pads return null, do nothing if null
+                if(converted_runways != null){
+                    int optimal_runway_index = SelectRunway( converted_runways, wind_direction);
+                    SubjectAirport.Runways[optimal_runway_index].OptimalRunway = true;
+                }
             }
+            return SubjectAirport;
         }
 
         //possible to receive empty list and/or return null
         public List<int> ConvertRunways(List<RunwayDto> runways){
 
-            if(runways == null){ //some airports don't have runway data
-                return null;
+            if(runways == null){ //ensure not null
+                throw new System.ArgumentException("ConvertRunways cannot accept a null runway object.");
             }
 
             List<int> runway_directions = new List<int>();
             foreach( RunwayDto runway in runways ){
                 if( runway.LowHeadingDeg != null ){
                     runway_directions.Add( (int)runway.LowHeadingDeg ); //not nullable
-                }else if(runway.RunwayName.Contains("H") || runway.RunwayName.Contains("B")){ //helicopters and balloons
-                    //do nothing, don't add
+                }else if(runway.RunwayName.Contains("H")){ //helicopters
+                    runway.RunwayDescription = "Has a Helicopter Pad";
+                }else if(runway.RunwayName.Contains("B")){ //ballons don't make noise
+                    runway.RunwayDescription = "Has A Balloon Pad";
                 }else{ 
+                    //determine runway scale
+                    if((runway.RunwayMaterial.ToLower().Contains("as")
+                     || runway.RunwayMaterial.ToLower().Contains("con"))
+                     && runway.RunwayLengthFt > 6000){ //asphalt or concrete runways of sufficient length
+                        runway.RunwayDescription = "Capable of fielding large planes";
+                    }else{
+                        runway.RunwayDescription = "Capable of fielding small planes";
+                    }
+
                     //extract numbers from string
                     string s = runway.RunwayName;
                     string number_string = "";
@@ -58,7 +84,7 @@ namespace MainApp.BusinessLogic
 
         public int SelectRunway( List<int> runway_directions, int wind_direction ){ //returns integer index with most optimal runway
 
-            if(runway_directions.Count == 0 || runway_directions == null){
+            if(runway_directions == null ||runway_directions.Count == 0 ){
                 throw new System.ArgumentException("Runway selector cannot accept empty runway list");
             }
 
