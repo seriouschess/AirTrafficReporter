@@ -41,6 +41,7 @@ namespace MainApp.BusinessLogic
 
             List<int> runway_directions = new List<int>();
             foreach( RunwayDto runway in runways ){
+
                 if( runway.LowHeadingDeg != null ){
                     runway_directions.Add( (int)runway.LowHeadingDeg ); //not nullable
                 }else if(runway.RunwayName.Contains("H")){ //helicopters
@@ -70,8 +71,41 @@ namespace MainApp.BusinessLogic
                             //do nothing
                         }
                     }
-                    int r_direction = System.Int32.Parse( number_string );
-                    runway_directions.Add( r_direction );
+
+                    int r_direction;
+                    //handle edge cases
+                    if(number_string == ""){ //no numbers were extracted
+                        string rn = runway.RunwayName.ToLower();
+                        if(rn.Contains("ne")){
+                            r_direction = 45;
+                        }else if(rn.Contains("nw")){
+                            r_direction = 315;
+                        }else if(rn.Contains("ne")){
+                            r_direction = 45;
+                        }else if(rn.Contains("sw")){
+                            r_direction = 225;
+                        }else if(rn.Contains("se")){
+                            r_direction = 135;
+                        }else if(rn.Contains("n")){
+                            r_direction = 360;
+                        }else if(rn.Contains("s")){
+                            r_direction = 180;
+                        }else if(rn.Contains("e")){
+                            r_direction = 90;
+                        }else{ //rn.Contains("w")
+                            r_direction = 270;
+                        }
+                        runway.LowHeadingDeg = r_direction; //provide angle to runway
+                        runway_directions.Add( r_direction );
+                    }else{ //attempt to parse numbers
+                        try{
+                            r_direction = System.Int32.Parse( number_string );
+                            runway.LowHeadingDeg = r_direction; //provide angle to runway
+                            runway_directions.Add( r_direction );
+                        }catch{
+                            throw new System.ArgumentException($"{runway.RunwayName} from RunwayID: {runway.RunwayId} did not contain a formatable string");
+                        }
+                    }
                 }
             }
 
@@ -107,17 +141,13 @@ namespace MainApp.BusinessLogic
 
                 double test_a = Math.Cos( absolute_difference_a* Math.PI / 180.0 );
                 double test_b = Math.Cos( absolute_difference_b* Math.PI / 180.0 );
-                System.Console.WriteLine($"Differances a:{absolute_difference_a} b:{absolute_difference_b}");
-                System.Console.WriteLine($"Tests a:{test_a} b:{test_b}");
 
                 if( test_a < LowestCosine ){
-                    System.Console.WriteLine("doe");
                     LowestCosine = test_a;
                     current_winner = x;
                 }
 
                 if( test_b < LowestCosine ){
-                    System.Console.WriteLine("ray");
                     LowestCosine = test_a;
                     current_winner = x;
                 }
