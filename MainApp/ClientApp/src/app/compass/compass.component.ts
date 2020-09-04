@@ -11,8 +11,10 @@ export class CompassComponent implements OnInit {
 
   @Input() wind_direction:number;
   @Input() runway_direction:number;
+  @Input() display_flight_arrow:boolean;
 
   ngOnInit() {
+    console.log(`display flight arrow:${this.display_flight_arrow}`);
   }
 
   updateWindArrowStyle(){

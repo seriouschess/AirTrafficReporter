@@ -8,25 +8,32 @@ namespace MainApp.BusinessLogic
     {
         public RunwaySelector(){}
 
-        public AirportDto AssignOptimalRunwayToAirportDto(AirportDto SubjectAirport){
+        public AirportDto AssignOptimalRunwayToAirportDto( AirportDto SubjectAirport ){
             if(SubjectAirport.Runways == null || SubjectAirport.Runways.Count == 0 ){
                 return SubjectAirport; //no runways, do nothing
             }else{
                 if(SubjectAirport.WeatherForecast[0] == null){
                     throw new System.ArgumentException( "WeatherForecast required before optimal runway can be assigned" );
                 }
-                foreach(RunwayDto runway in SubjectAirport.Runways){ //reset all runways
-                    runway.OptimalRunway = false;
-                }
-                int wind_direction = SubjectAirport.WeatherForecast[0].WeatherReports[0].WindDirectionDeg;
-
 
                 List<int> converted_runways = ConvertRunways(SubjectAirport.Runways);
 
-                //helicopter pads return null, do nothing if null
-                if(converted_runways != null){
-                    int optimal_runway_index = SelectRunway( converted_runways, wind_direction);
-                    SubjectAirport.Runways[optimal_runway_index].OptimalRunway = true;
+                foreach( WeatherReportDto weather_report in SubjectAirport.WeatherForecast[0].WeatherReports ){ 
+
+                    if(converted_runways == null){
+                        //single helicopter/balloon pads return null, do nothing if null
+                        weather_report.AirplaneTakeoffDescription = "Planes do not take off from this airport.";
+                    }else if( converted_runways.Count == 0 ){
+                        //single helicopter/balloon pads return null, do nothing if null
+                        weather_report.AirplaneTakeoffDescription = "Insufficient runway information to calculate takeoff direction.";
+                    }else{
+                        //assign plane takeoff data per weather day
+                        int wind_direction = weather_report.WindDirectionDeg; 
+                        int optimal_runway_direction = SelectOptimalRunwayDirection( converted_runways, wind_direction );
+                        int airplane_takeoff_angle = optimal_runway_direction;
+                        weather_report.AirplaneTakeoffAngle = airplane_takeoff_angle;
+                        weather_report.AirplaneTakeoffDescription = ProvideAirplaneTakeoffDescription( airplane_takeoff_angle );
+                    }
                 }
             }
             return SubjectAirport;
@@ -109,13 +116,103 @@ namespace MainApp.BusinessLogic
                 }
             }
 
-            if(runway_directions.Count == 0){
+            if(runway_directions.Count == 0){ //empty runway list is considered as not having sufficient runway information
                 return null;
             }else{
                 return runway_directions;
             }
         }
 
+        //----- 2nd iteration, after realising selecting the runway was not enough -------- 
+        public int SelectOptimalRunwayDirection(List<int> runway_directions, int wind_direction){ 
+             if(runway_directions == null ||runway_directions.Count == 0 ){
+                throw new System.ArgumentException("Runway selector cannot accept empty runway list");
+            }
+
+            RunwayDto SelectedRunway = new RunwayDto();
+
+            //find the lowest value cosine for the difference between the wind angle and the runway angle
+
+            double LowestCosine = 1.1; //inital impossible cosine value above maximum
+            int current_winning_direction = -1; //initial impossible degree value
+
+            for( int x=0; x < runway_directions.Count; x++ ){
+
+                //candidate runway directions
+                int direction = runway_directions[x];
+                int opposite_direction = (direction + 180) % 360;
+
+                //difference between runway directions and wind direction
+                int absolute_difference_a = Math.Abs(direction - wind_direction );
+                int absolute_difference_b = Math.Abs(opposite_direction - wind_direction );
+
+                double test_a = Math.Cos( absolute_difference_a* Math.PI / 180.0 );
+                double test_b = Math.Cos( absolute_difference_b* Math.PI / 180.0 );
+
+                if( test_a < LowestCosine ){
+                    LowestCosine = test_a;
+                    current_winning_direction = direction;
+                }
+
+                if( test_b < LowestCosine ){
+                    LowestCosine = test_b;
+                    current_winning_direction = opposite_direction;
+                }
+            }
+
+            if(current_winning_direction == -1){ //should always return a runway direction
+                throw new System.Exception( "SelectOptimalRunwayDirection could not find optimal runway direction" );
+            }
+            
+            return current_winning_direction;
+        }
+
+        // private int SelectOptimalPlaneTakeoffDirection(int optimal_runway_direction){  misunderstood runway convention
+        //     return ( optimal_runway_direction + 180 ) % 360;
+        // }
+
+        private string ProvideAirplaneTakeoffDescription( int airplane_takeoff_angle ){
+
+            if( ( airplane_takeoff_angle != airplane_takeoff_angle % 360 ) && airplane_takeoff_angle !=  360){
+                throw new System.ArgumentException($"Argument value: {airplane_takeoff_angle} out of range for ProvideAirplaneTakeoffDescription");
+            }
+
+            string land_direction;
+            string takeoff_direction;
+
+            if( (airplane_takeoff_angle >= 0) && (airplane_takeoff_angle < 20) ){ //+20
+                takeoff_direction = "North";
+                land_direction = "South";
+            }else if( (airplane_takeoff_angle >= 20) && (airplane_takeoff_angle < 70) ){ //+50
+                takeoff_direction = "North East";
+                land_direction = "South West";
+            }else if( (airplane_takeoff_angle >= 70) && (airplane_takeoff_angle < 110) ){ //+40
+                takeoff_direction = "East";
+                land_direction = "West";
+            }else if( (airplane_takeoff_angle >= 110) && (airplane_takeoff_angle < 160) ){ //+50
+                takeoff_direction = "South East";
+                land_direction = "North West";
+            }else if( (airplane_takeoff_angle >= 160) && (airplane_takeoff_angle < 200) ){ //+40
+                takeoff_direction = "South";
+                land_direction = "North";
+            }else if( (airplane_takeoff_angle >= 200) && (airplane_takeoff_angle < 250) ){ //+50
+                takeoff_direction = "South West";
+                land_direction = "North East";
+            }else if( (airplane_takeoff_angle >= 250) && (airplane_takeoff_angle < 290) ){ //+40
+                takeoff_direction = "West";
+                land_direction = "East";
+            }else if( (airplane_takeoff_angle >= 290) && (airplane_takeoff_angle < 340) ){  //+50
+                takeoff_direction = "North West";
+                land_direction = "South East";
+            }else{ //if( (airplane_takeoff_angle >= 340) && (airplane_takeoff_angle <= 360) ){ //+20
+                takeoff_direction = "North";
+                land_direction = "South";
+            }
+
+            return $"Airplanes will be landing from the {land_direction} and taking off to the {takeoff_direction}";
+        }
+
+        //----- 1st iteration -------
         public int SelectRunway( List<int> runway_directions, int wind_direction ){ //returns integer index with most optimal runway
 
             if(runway_directions == null ||runway_directions.Count == 0 ){
@@ -129,7 +226,7 @@ namespace MainApp.BusinessLogic
             double LowestCosine = 1; //inital value max
             int current_winner = 0;
 
-            for(int x=0;x<runway_directions.Count;x++){
+            for(int x=0; x < runway_directions.Count; x++){
 
                 //candidate runway directions
                 int direction = runway_directions[x];
@@ -148,7 +245,7 @@ namespace MainApp.BusinessLogic
                 }
 
                 if( test_b < LowestCosine ){
-                    LowestCosine = test_a;
+                    LowestCosine = test_b;
                     current_winner = x;
                 }
             }

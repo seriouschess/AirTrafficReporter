@@ -1,4 +1,4 @@
 <div class="compass">
 <img src="/assets/WindArrow.png" class="arrow" [ngStyle]="updateWindArrowStyle()">
-<img src="/assets/PlaneArrow.png" class="arrow" [ngStyle]="updateRunwayArrowStyle()">
+<img *ngIf="display_flight_arrow" src="/assets/PlaneArrow.png" class="arrow" [ngStyle]="updateRunwayArrowStyle()">
 </div>

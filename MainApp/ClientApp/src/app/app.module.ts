@@ -7,12 +7,14 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AirportTrackerComponent } from './airport-tracker/airport-tracker.component';
 import { CompassComponent } from './compass/compass.component';
+import { AirportWeatherComponent } from './airport-weather/airport-weather.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AirportTrackerComponent,
-    CompassComponent
+    CompassComponent,
+    AirportWeatherComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

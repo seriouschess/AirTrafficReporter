@@ -4,7 +4,6 @@ export interface Runway {
     runwayMaterial:string;
     runwayLengthFt:number;
     lowHeadingDeg:number;
-    optimalRunway:boolean;
     runwayDescription:string;
    
   }

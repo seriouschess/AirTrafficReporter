@@ -9,5 +9,7 @@ namespace MainApp.dtos
         public int WindDirectionDeg {get;set;} //360 is north
         public double WindSpeed {get;set;}
         public DateTime PredictionDatetime {get;set;}
+        public int AirplaneTakeoffAngle {get;set;}
+        public string AirplaneTakeoffDescription {get;set;}
     }
 }

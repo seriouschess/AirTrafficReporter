@@ -22,14 +22,13 @@ export class AirportTrackerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.airport_selected = false;
-    this.airports = null;
-    this.search_string = "";
+    this.resetSearch();
   }
 
   resetSearch(){
     this.airport_selected = false;
     this.airports = null;
+    this.search_string = "";
   }
 
   searchPlanes(){
