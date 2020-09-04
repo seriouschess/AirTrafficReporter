@@ -107,8 +107,8 @@ namespace MainApp.BusinessLogic
                     }else{ //attempt to parse numbers
                         try{
                             r_direction = System.Int32.Parse( number_string );
-                            runway.LowHeadingDeg = r_direction; //provide angle to runway
-                            runway_directions.Add( r_direction );
+                            runway.LowHeadingDeg = r_direction*10; //provide angle to runway, runway names are ten times the degrees
+                            runway_directions.Add( r_direction*10 );
                         }catch{
                             throw new System.ArgumentException($"{runway.RunwayName} from RunwayID: {runway.RunwayId} did not contain a formatable string");
                         }

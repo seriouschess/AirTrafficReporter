@@ -42,14 +42,18 @@ export class AirportWeatherComponent implements OnInit {
       this.display_flight_arrow = true;
     }
   }
-
-  formatDate(){
-    for(var x:number; x<this.current_report.predictionDateTime.length; x++ ){
-      // if(  ){
-
-      // }
-    }
-    
-  }
-
 }
+
+  // formatDate(){
+  //   var dt:string = this.current_report.predictionDateTime;
+  //   var parse_string:string = "";
+  //   for(var x:number; x<dt.length; x++ ){
+  //     parse_string += dt[x];
+     
+  //     if( dt[x]=="-" ){
+  //       parse_string = "";
+        
+  //     }
+  //   }
+
+//}
