@@ -1,8 +1,11 @@
 .arrow{
-    position: relative;
+    position: absolute;
+    height: 200px;
+    width: 200px;
 }
 
 .compass{
+    display: inline-block;
     height: 200px;
     width: 200px;
     z-index: -2;

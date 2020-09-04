@@ -1,0 +1,23 @@
+.head-info{
+    width:60%;
+    display: inline-block;
+}
+
+.title-slate{
+    display: inline-block;
+    text-align:center;
+    height: 250px;
+    width: 40%;
+}
+
+.plane-bg{
+    display: inline-block;
+    width: 60%;
+}
+
+.search-form{
+    width:80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -1,0 +1,53 @@
+
+  <div class="title-slate">
+    <h1 id="tableLabel"> Airport Noise Tracker </h1>
+    <h3>Because noise from planes will drive you insane!</h3>
+  </div>
+  <img src="/assets/PlaneBg.png" class="plane-bg">
+
+  <div class="search-form" *ngIf="!airport_selected">
+    <form (submit)=searchPlanes()>
+      <p class="text-info"> Type in the search bar to find an airport. Search incomplete names. Minimum of 3 characters required. </p>
+      <p><label>Airport Name: </label><input class="title_box" type="text" name="search_string" [(ngModel)]="search_string"></p>
+      <p><button type="submit" class="btn btn-success"> search </button></p>
+    </form>
+  </div>
+
+  <div class="container">
+  <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="airports && !airport_selected">
+    <thead>
+      <tr>
+        <th> Airport Id </th>
+        <th> Airport Name  </th>
+        <th> Latitude </th>
+        <th> Longitude </th>
+        <th> Runways </th>
+        <th> Weather Forecast </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let airport of airports">
+        <td>{{ airport.airportId }}</td>
+        <td>{{ airport.airportName }}</td>
+        <td>{{ airport.latitude }}</td>
+        <td>{{ airport.longitude }}</td>
+        <td>{{ airport.runways | json }}</td>
+        <td>{{ airport.weatherForecast | json }}</td>
+        <td><button class="btn btn-info" (click)="getSingleAirport(airport.airportId)">Select This Airport</button></td>
+      </tr>
+    </tbody>
+  </table>
+ </div> 
+
+  <div *ngIf="selected_airport && airport_selected">
+    <div class="head-info"></div>
+    <app-compass [wind_direction]="135" [runway_direction]="240" ></app-compass>
+    <p> {{ selected_airport.airportId }} </p>
+    <p> {{ selected_airport.airportName }} </p>
+    <p> {{ selected_airport.latitude }} </p>
+    <p> {{ selected_airport.longitude }} </p>
+    <p> {{ selected_airport.runways | json }} </p>
+    <p> {{ selected_airport.weatherForecast | json }} </p>
+    <div *ngFor=""></div>
+    <button class="btn btn-info">Search a different Airport</button>
+  </div>

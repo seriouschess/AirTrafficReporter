@@ -17,7 +17,6 @@ export class CompassComponent implements OnInit {
 
   updateWindArrowStyle(){
     let styles = {
-      //transform: rotate(20deg);
       'transform': `rotate(${this.wind_direction}deg)`
     };
     return styles;
@@ -25,8 +24,7 @@ export class CompassComponent implements OnInit {
 
   updateRunwayArrowStyle(){
     let styles = {
-      //transform: rotate(20deg);
-      'transform': `rotate(${this.wind_direction}deg)`
+      'transform': `rotate(${this.runway_direction}deg)`
     };
     return styles;
   }
