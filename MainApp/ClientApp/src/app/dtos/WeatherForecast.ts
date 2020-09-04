@@ -1,6 +1,7 @@
+import { WeatherReport } from "./WeatherReport";
+
 export interface WeatherForecast {
-    date: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
+    weatherForecastId: number;
+    weatherReports: WeatherReport[];
+    UpdatedAt: string;
   }

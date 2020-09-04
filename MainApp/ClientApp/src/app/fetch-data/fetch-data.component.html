@@ -1,24 +1,38 @@
-<h1 id="tableLabel">Weather forecast</h1>
+<h1 id="tableLabel"> Airports </h1>
 
 <p>This component demonstrates fetching data from the server.</p>
 
-<p *ngIf="!forecasts"><em>Loading...</em></p>
+<p *ngIf="!airports"><em>Loading...</em></p>
 
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="airports">
   <thead>
     <tr>
-      <th>Date</th>
-      <th>Temp. (C)</th>
-      <th>Temp. (F)</th>
-      <th>Summary</th>
+      <th> Airport Id </th>
+      <th> Airport Name  </th>
+      <th> Latitude </th>
+      <th> Longitude </th>
+      <th> Runways </th>
+      <th> Weather Forecast </th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let forecast of forecasts">
-      <td>{{ forecast.date }}</td>
-      <td>{{ forecast.temperatureC }}</td>
-      <td>{{ forecast.temperatureF }}</td>
-      <td>{{ forecast.summary }}</td>
+    <tr *ngFor="let airport of airports">
+      <td>{{ airport.airportId }}</td>
+      <td>{{ airport.airportName }}</td>
+      <td>{{ airport.latitude }}</td>
+      <td>{{ airport.longitude }}</td>
+      <td>{{ airport.runways | json }}</td>
+      <td>{{ airport.weatherForecast | json }}</td>
+      <td><button class="btn btn-info" (click)="getSingleAirport(airport.airportId)">Select This Airport</button></td>
     </tr>
   </tbody>
 </table>
+
+<div *ngIf="selected_airport">
+  <p> {{ selected_airport.airportId }} </p>
+  <p> {{ selected_airport.airportName }} </p>
+  <p> {{ selected_airport.latitude }} </p>
+  <p> {{ selected_airport.longitude }} </p>
+  <p> {{ selected_airport.runways | json }} </p>
+  <p> {{ selected_airport.weatherForecast | json }} </p>
+</div>

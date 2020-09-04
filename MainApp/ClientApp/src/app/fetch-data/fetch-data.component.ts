@@ -1,5 +1,7 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import{ HttpService } from '../Services/http-service.service';
+import { WeatherForecast } from '../dtos/WeatherForecast';
+import { Airport } from '../dtos/Airport';
 
 
 @Component({
@@ -7,16 +9,22 @@ import{ HttpService } from '../Services/http-service.service';
   templateUrl: './fetch-data.component.html'
 })
 export class FetchDataComponent {
-  public forecasts: WeatherReport[];
+  public forecasts: WeatherForecast[];
+
+  public airports: Airport[];
+  public selected_airport: Airport;
+  private httpClient:HttpService
 
   constructor(_httpClient: HttpService) {
-    _httpClient.getWeather(this.forecasts).subscribe(res => this.forecasts = res);
+    this.httpClient = _httpClient;
+    this.searchPlanes("heliport");
   }
-}
 
-interface WeatherReport {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
+  searchPlanes( search_string:string ){
+    this.httpClient.searchPlanes(search_string).subscribe(res => this.airports = res);
+  }
+
+  getSingleAirport(airport_id:number){
+    this.httpClient.getFullAirport(airport_id).subscribe(res => this.selected_airport = res);
+  }
 }

@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { WeatherForecast } from '../dtos/WeatherForecast';
-import { Subject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { Airport } from '../dtos/Airport';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,11 @@ export class HttpService {
     this.baseUrl = _baseUrl;
   }
 
-  getWeather(weather:WeatherForecast[]):Observable<WeatherForecast[]>{
-    return null; //this.http.get<WeatherForecast[]>(this.baseUrl + 'WeatherReport');
+  searchPlanes(search_string:string):Observable<Airport[]>{
+    return this.http.get<Airport[]>(this.baseUrl + `airport/search/${search_string}`);
+  }
+
+  getFullAirport(airport_id:number):Observable<Airport>{
+    return this.http.get<Airport>(this.baseUrl + `airport/full/${airport_id}`);
   }
 }

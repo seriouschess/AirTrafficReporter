@@ -1,0 +1,12 @@
+.arrow{
+    position: relative;
+}
+
+.compass{
+    height: 200px;
+    width: 200px;
+    z-index: -2;
+    background-image: url("/assets/Compass.PNG");
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
