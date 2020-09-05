@@ -1,11 +1,16 @@
+.selected-airport-container{
+    padding: 2%;
+}
+
 .head-info{
-    width:60%;
-    display: inline-block;
+    width: 60%;
+    display: block;
+    margin-bottom: 2%;
 }
 
 .title-slate{
     display: inline-block;
-    text-align:center;
+    text-align: center;
     height: 250px;
     width: 40%;
 }
@@ -16,8 +21,21 @@
 }
 
 .search-form{
-    width:80%;
+    width: 80%;
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.runway-info-box{
+    padding: 2%;
+    width: 60%;
+    display: block;
+    border: 2px solid black;
+    margin-bottom: 2%;
+}
+
+.custom-button{
+    margin-left: 5%;
+    margin-top: 2%;
 }

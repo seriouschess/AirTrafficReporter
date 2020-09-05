@@ -3,7 +3,7 @@ export interface WeatherReport{
     description: number;
     windDirectionDeg: number;
     windSpeed: number;
-    predictionDateTime:string;
+    predictionDateString:string;
     airplaneTakeoffAngle: number;
     airplaneTakeoffDescription:string;
   }

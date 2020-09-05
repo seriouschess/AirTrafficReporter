@@ -1,13 +1,14 @@
 
-  <div class="title-slate">
+  <div class="title-slate" *ngIf="airports == null && !airport_selected">
     <h1 id="tableLabel"> Airport Noise Tracker </h1>
     <h3>Because noise from planes will drive you insane!</h3>
   </div>
-  <img src="/assets/PlaneBg.png" class="plane-bg">
+  <img src="/assets/PlaneBg.png" *ngIf="airports == null && !airport_selected" class="plane-bg">
 
   <div class="search-form" *ngIf="!airport_selected">
     <form (submit)=searchPlanes()>
       <p class="text-info"> Type in the search bar to find an airport. Search incomplete names. Minimum of 3 characters required. </p>
+      <p *ngIf="input_validation_error" class="text-warning"> Search length must be between 3 and 25 characters </p>
       <p><label>Airport Name: </label><input class="title_box" type="text" name="search_string" [(ngModel)]="search_string"></p>
       <p><button type="submit" class="btn btn-success"> search </button></p>
     </form>
@@ -36,13 +37,27 @@
  </div> 
 
   <div *ngIf="selected_airport && airport_selected">
-    <div class="head-info"></div>
-    <p> {{ selected_airport.airportId }} </p>
-    <p> {{ selected_airport.airportName }} </p>
-    <p> {{ selected_airport.latitude }} </p>
-    <p> {{ selected_airport.longitude }} </p>
-    <p> {{ selected_airport.runways | json }} </p>
-    <p> {{ selected_airport.weatherForecast | json }} </p>
-    <app-airport-weather [weather_reports]="selected_airport.weatherForecast[0].weatherReports">  </app-airport-weather>
-    <button class="btn btn-info" (click)="resetSearch()">Search a different Airport</button>
+    <div class="container selected-airport-container">
+      <div class="row">
+        <div class="col-sm">
+          <div class="head-info">
+            <h3> {{ selected_airport.airportName }} </h3>
+            <p> Latitude: {{ selected_airport.latitude }} </p>
+            <p> Longitude: {{ selected_airport.longitude }} </p>
+          </div>
+          <div class="runway-info-box" *ngIf="runway_information.length > 0">
+            <h5> Runway Information </h5>
+            <div *ngFor="let runway_description of runway_information">
+              <p> {{ runway_description }} </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <app-airport-weather [weather_reports]="selected_airport.weatherForecast[0].weatherReports"></app-airport-weather>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-info custom-button" (click)="resetSearch()"> Search a different Airport </button>
   </div>
+
+    

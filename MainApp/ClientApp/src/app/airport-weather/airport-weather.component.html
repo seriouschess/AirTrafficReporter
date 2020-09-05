@@ -1,6 +1,12 @@
-<p>airport-weather works!</p>
-<app-compass [wind_direction]="current_report.windDirectionDeg" [display_flight_arrow]="display_flight_arrow" [runway_direction]="current_report.airplaneTakeoffAngle" ></app-compass>
-<p>{{ current_report | json }}</p>
-<button class="btn btn-info" (click)="incrementReportIndex()" > Next Day's Weather </button>
-<button class="btn btn-info" (click)="decrementReportIndex()"> Previous Day's Weather </button>
+<div class = "weather-box">
+    <p> Forecast Date: {{ current_report.predictionDateString }} </p>
+    <p> Temperature: {{ current_report.temperature }}</p>
+    <p> Weather Description: {{ current_report.description }}</p>
+    <p> Wind Speed: {{ current_report.windSpeed }} </p>
+    <app-compass [wind_direction]="current_report.windDirectionDeg" [display_flight_arrow]="display_flight_arrow" [runway_direction]="current_report.airplaneTakeoffAngle" ></app-compass>
+    <p> {{current_report.airplaneTakeoffDescription}} </p>
+    <button class="btn btn-info" (click)="decrementReportIndex()"> Previous Day's Weather </button>
+    <button class="btn btn-info weather-right-button" (click)="incrementReportIndex()" > Next Day's Weather </button>
+    
+</div>
 

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 using MainApp.dtos;
+using System.Globalization;
 
 namespace MainApp.Queries
 {
@@ -115,6 +116,7 @@ namespace MainApp.Queries
         }
 
         public AirportDto FindFullAirportInformationById( int airport_id ){
+            CultureInfo datetime_culture_format = CultureInfo.CreateSpecificCulture("en-US");
             List<AirportDto> FoundAirport = dbContext.Airports.Where(x => x.AirportId == airport_id).Select(a => new AirportDto(){
                 AirportId = a.AirportId,
                 AirportName = a.AirportName,
@@ -135,7 +137,7 @@ namespace MainApp.Queries
                         Description = re.Description,
                         WindSpeed = re.WindSpeed,
                         WindDirectionDeg = re.WindDirectionDeg,
-                        PredictionDatetime = re.PredictionDatetime
+                        PredictionDateString = re.PredictionDatetime.ToString("D", datetime_culture_format)
                     }).ToList(),
                 }).ToList()
             }).ToList();

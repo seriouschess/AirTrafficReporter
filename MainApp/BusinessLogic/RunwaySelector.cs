@@ -9,7 +9,10 @@ namespace MainApp.BusinessLogic
         public RunwaySelector(){}
 
         public AirportDto AssignOptimalRunwayToAirportDto( AirportDto SubjectAirport ){
-            if(SubjectAirport.Runways == null || SubjectAirport.Runways.Count == 0 ){
+            if(SubjectAirport.Runways == null || SubjectAirport.Runways.Count == 0 ){ //no runway information
+                foreach( WeatherReportDto weather_report in SubjectAirport.WeatherForecast[0].WeatherReports ){
+                    weather_report.AirplaneTakeoffDescription = "Insufficient runway information to calculate takeoff direction.";
+                }     
                 return SubjectAirport; //no runways, do nothing
             }else{
                 if(SubjectAirport.WeatherForecast[0] == null){
@@ -20,12 +23,9 @@ namespace MainApp.BusinessLogic
 
                 foreach( WeatherReportDto weather_report in SubjectAirport.WeatherForecast[0].WeatherReports ){ 
 
-                    if(converted_runways == null){
-                        //single helicopter/balloon pads return null, do nothing if null
+                    if(converted_runways == null || converted_runways.Count == 0){
+                        //single helicopter/balloon pads return null/0
                         weather_report.AirplaneTakeoffDescription = "Planes do not take off from this airport.";
-                    }else if( converted_runways.Count == 0 ){
-                        //single helicopter/balloon pads return null, do nothing if null
-                        weather_report.AirplaneTakeoffDescription = "Insufficient runway information to calculate takeoff direction.";
                     }else{
                         //assign plane takeoff data per weather day
                         int wind_direction = weather_report.WindDirectionDeg; 

@@ -1,0 +1,11 @@
+.weather-box{
+    padding: 10px;
+    width: 400px;
+    height: 600px;
+    display: inline-block;
+    border: 2px solid black;
+}
+
+.weather-right-button{
+    margin-left: 4px;
+}

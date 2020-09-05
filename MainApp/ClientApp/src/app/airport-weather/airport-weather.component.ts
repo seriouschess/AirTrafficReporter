@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { WeatherReport } from '../dtos/WeatherReport';
 
 @Component({
@@ -25,6 +25,7 @@ export class AirportWeatherComponent implements OnInit {
     if(this.weather_report_index >= this.weather_reports.length){
       this.weather_report_index = 0;
     }
+    this.current_report = this.weather_reports[this.weather_report_index];
   }
 
   decrementReportIndex(){
@@ -32,11 +33,14 @@ export class AirportWeatherComponent implements OnInit {
     if(this.weather_report_index < 0){
       this.weather_report_index = this.weather_reports.length - 1;
     }
+    this.current_report = this.weather_reports[this.weather_report_index];
   }
 
   checkCompassDisplay(){
-    if(this.weather_reports[this.weather_report_index].airplaneTakeoffDescription == "Planes do not take off from this airport." ||
-    this.weather_reports[this.weather_report_index].airplaneTakeoffDescription == "Insufficient runway information to calculate takeoff direction."){
+    var check_me:string = this.weather_reports[this.weather_report_index].airplaneTakeoffDescription;
+    if( check_me == null  || 
+      check_me == "Planes do not take off from this airport." ||
+      check_me == "Insufficient runway information to calculate takeoff direction."){
       this.display_flight_arrow = false;
     }else{
       this.display_flight_arrow = true;
@@ -44,16 +48,6 @@ export class AirportWeatherComponent implements OnInit {
   }
 }
 
-  // formatDate(){
-  //   var dt:string = this.current_report.predictionDateTime;
-  //   var parse_string:string = "";
-  //   for(var x:number; x<dt.length; x++ ){
-  //     parse_string += dt[x];
-     
-  //     if( dt[x]=="-" ){
-  //       parse_string = "";
-        
-  //     }
-  //   }
 
-//}
+
+
