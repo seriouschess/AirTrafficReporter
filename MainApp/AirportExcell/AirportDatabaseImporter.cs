@@ -27,7 +27,7 @@ namespace MainApp.AirportExcell
             Airport NewAirport;
             string[] rows = System.IO.File.ReadAllLines(_airports_path);
 
-            for(int y=1; y<2001; y++){
+            for(int y=1; y<rows.Length; y++){
                 NewAirport = new Airport();
                 string[] current_column = rows[y].Split(',');
                 for(int x=0; x<current_column.Length; x++){
@@ -52,12 +52,14 @@ namespace MainApp.AirportExcell
                         }
                     }                    
                 }
-                if(y%1001 == 0){
+                if((y-1)%1000 == 0){
                     System.Console.WriteLine($"Adding item {y-1} out of {rows.Length}...");
+                    _dbQuery.SaveChanges();
                 }
                 _dbQuery.AddAirport(NewAirport);
             }
-
+            
+            _dbQuery.SaveChanges();
             System.Console.WriteLine("Database initialized with Airports");
         }
 
@@ -67,7 +69,7 @@ namespace MainApp.AirportExcell
             Runway NewRunway;
             string[] rows = System.IO.File.ReadAllLines(_runways_path);
 
-            for(int y=1; y<2001; y++){
+            for(int y=1; y<rows.Length; y++){
                 NewRunway = new Runway();
                 string[] current_column = rows[y].Split(',');
                 for(int x=0; x<current_column.Length; x++){
@@ -76,7 +78,13 @@ namespace MainApp.AirportExcell
                         NewRunway.AirportId = airport_id;
                     }
                     if(x == 3){
-                        NewRunway.RunwayLengthFt = System.Int32.Parse(current_column[x]);
+                        try{
+                             NewRunway.RunwayLengthFt = System.Int32.Parse(current_column[x]);
+                        }catch{
+                            System.Console.WriteLine($"Unable to parse runway length value {current_column[x]} setting to 0");
+                            NewRunway.RunwayLengthFt = 0;
+                        }
+                       
                     }
                     if(x == 5){
                         NewRunway.RunwayMaterial = current_column[x].Replace("\"", "");
@@ -94,12 +102,14 @@ namespace MainApp.AirportExcell
                         NewRunway.RunwayName = current_column[x].Replace("\"", "");
                     }                   
                 }
-                if(y%1001 == 0){
+                if((y-1)%1000 == 0){
                     System.Console.WriteLine($"Adding item {y-1} out of {rows.Length}...");
+                    _dbQuery.SaveChanges();
                 }
                 _dbQuery.AddRunway(NewRunway);
             }
 
+            _dbQuery.SaveChanges();
             System.Console.WriteLine("Database initalized with runways...");
         }
         

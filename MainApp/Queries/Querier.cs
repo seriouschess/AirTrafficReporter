@@ -21,21 +21,16 @@ namespace MainApp.Queries
             dbContext.SaveChanges();
         }
 
-        //Add final airport?
-        public void AddFinalAirport(Airport NewAirport){
+        public void AddFinalAirport(Airport NewAirport){ //save changes required
             dbContext.Add( NewAirport );
-            dbContext.SaveChanges();
         }
 
 
-        public void AddRunway(Runway NewRunway){
+        public void AddRunway(Runway NewRunway){ //save changes required
             dbContext.Add( NewRunway );
-            dbContext.SaveChanges();
         }
 
-        //add final runway?
-        public void AddFinalRunway(Runway NewRunway){
-            dbContext.Add( NewRunway );
+        public void SaveChanges(){
             dbContext.SaveChanges();
         }
 
