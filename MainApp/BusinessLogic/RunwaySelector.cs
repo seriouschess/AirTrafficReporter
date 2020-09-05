@@ -51,7 +51,9 @@ namespace MainApp.BusinessLogic
 
                 if( runway.LowHeadingDeg != null ){
                     runway_directions.Add( (int)runway.LowHeadingDeg ); //not nullable
-                }else if(runway.RunwayName.Contains("H")){ //helicopters
+                }
+                
+                if(runway.RunwayName.Contains("H")){ //helicopters
                     runway.RunwayDescription = "Has a Helicopter Pad";
                 }else if(runway.RunwayName.Contains("B")){ //ballons don't make noise
                     runway.RunwayDescription = "Has A Balloon Pad";
