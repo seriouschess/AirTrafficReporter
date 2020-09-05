@@ -1,12 +1,13 @@
 <div class = "weather-box">
     <p> Forecast Date: {{ current_report.predictionDateString }} </p>
-    <p> Temperature: {{ current_report.temperature }}</p>
     <p> Weather Description: {{ current_report.description }}</p>
+    <p> Temperature: {{ current_report.temperature }}</p>
     <p> Wind Speed: {{ current_report.windSpeed }} </p>
+    <h5> {{current_report.airplaneTakeoffDescription}} </h5>
     <app-compass [wind_direction]="current_report.windDirectionDeg" [display_flight_arrow]="display_flight_arrow" [runway_direction]="current_report.airplaneTakeoffAngle" ></app-compass>
-    <p> {{current_report.airplaneTakeoffDescription}} </p>
+    <p class="text-info"> Blue Arrow: wind direction </p>
+    <p class="text-dark"> Grey Arrow: airplane takeoff direction </p>
     <button class="btn btn-info" (click)="decrementReportIndex()"> Previous Day's Weather </button>
     <button class="btn btn-info weather-right-button" (click)="incrementReportIndex()" > Next Day's Weather </button>
-    
 </div>
 

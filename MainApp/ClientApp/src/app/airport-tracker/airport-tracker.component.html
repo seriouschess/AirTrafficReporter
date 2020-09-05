@@ -5,11 +5,13 @@
   </div>
   <img src="/assets/PlaneBg.png" *ngIf="airports == null && !airport_selected" class="plane-bg">
 
+  <h1 *ngIf="airports && !airport_selected" class="search-title"> Airport Noise Tracker </h1>
+
   <div class="search-form" *ngIf="!airport_selected">
     <form (submit)=searchPlanes()>
-      <p class="text-info"> Type in the search bar to find an airport. Search incomplete names. Minimum of 3 characters required. </p>
+      <p class="text-info"> Type in the search bar to find an airport. Incomplete names can be searched. Minimum of 3 characters required. </p>
       <p *ngIf="input_validation_error" class="text-warning"> Search length must be between 3 and 25 characters </p>
-      <p><label>Airport Name: </label><input class="title_box" type="text" name="search_string" [(ngModel)]="search_string"></p>
+      <p><label>Airport Name: </label><input class="aircraft-search-bar" type="text" name="search_string" [(ngModel)]="search_string"></p>
       <p><button type="submit" class="btn btn-success"> search </button></p>
     </form>
   </div>
@@ -18,7 +20,6 @@
   <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="airports && !airport_selected">
     <thead>
       <tr>
-        <th> Airport Id </th>
         <th> Airport Name  </th>
         <th> Latitude </th>
         <th> Longitude </th>
@@ -26,7 +27,6 @@
     </thead>
     <tbody>
       <tr *ngFor="let airport of airports">
-        <td>{{ airport.airportId }}</td>
         <td>{{ airport.airportName }}</td>
         <td>{{ airport.latitude }}</td>
         <td>{{ airport.longitude }}</td>
@@ -34,6 +34,7 @@
       </tr>
     </tbody>
   </table>
+    <p *ngIf="airports != null && airports.length == 10" class="search-table-end text-info"> (Maximum of 10 Airports in a search) </p>
  </div> 
 
   <div *ngIf="selected_airport && airport_selected">
