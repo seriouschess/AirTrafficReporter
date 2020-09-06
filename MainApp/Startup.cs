@@ -36,7 +36,7 @@ namespace MainApp
             );
 
             //Entity/MySQL
-            string mySqlConnection = Configuration["DBInfo:ConnectionString"];
+            string mySqlConnection = Configuration["ConnectionString"];
             System.Console.WriteLine(mySqlConnection);
             services.AddDbContext<DatabaseContext>(options => options.UseMySql(mySqlConnection));
             
