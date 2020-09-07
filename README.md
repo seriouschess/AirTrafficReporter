@@ -1,4 +1,4 @@
-#Airport Noise Tracker
+## Airport Noise Tracker
 
 Made with Angular and ASP.NET Core 3.1
 
@@ -12,7 +12,7 @@ Currently deployed at: https://airnoisetracker.professionalserver.net/
 
 
 
-#Application Overview
+## Application Overview
 
 - Find where airplanes are taking off from your local airport based on local weather information.
 - Search any registered airport in the world.
@@ -21,7 +21,7 @@ Currently deployed at: https://airnoisetracker.professionalserver.net/
 
 
 
-#API Endpoints:
+## API Endpoints:
 
 HttpGet - .../airport/search/<string search_string>
 
@@ -33,7 +33,7 @@ returns an airport with runway and local 5 day weather forecast in addition to c
 
 
 
-#Custom file folders:
+## Custom file folders:
 
 AirportExcell - 
 
@@ -56,7 +56,7 @@ ClientApp/src - Contains all frontend code written in AngularJS
 
 
 
-#Setup:
+## Setup:
 
 create a file called appsettings.json in the ./MainApp directory and add the following content with your sql root and password:
 ```yaml
@@ -69,7 +69,7 @@ create a file called appsettings.json in the ./MainApp directory and add the fol
 
 
 
-#Running Migrations:
+## Running Migrations:
 
 Multiproject ef Migration:
 dotnet ef --startup-project MainApp/MainApp.csproj migrations add first -p MainApp/MainApp.csproj
