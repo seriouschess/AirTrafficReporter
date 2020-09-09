@@ -61,8 +61,8 @@ namespace MainApp
                 if(context.Airports.Take(1).ToList().Count == 0){ //check if DB was initialised already
                     Querier dbQuery = new Querier(context);
                     AirportDatabaseImporter importer = new AirportDatabaseImporter(env, dbQuery);
-                    importer.ImportAirportData();
-                    importer.ImportRunwayData();
+                    //importer.ImportAirportData();
+                    //importer.ImportRunwayData();
                 }
             }
 
