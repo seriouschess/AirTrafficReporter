@@ -36,9 +36,11 @@ namespace MainApp
             );
 
             //Entity/MySQL
-            string mySqlConnection = Configuration["ConnectionString"];
-            System.Console.WriteLine(mySqlConnection);
-            services.AddDbContext<DatabaseContext>(options => options.UseMySql(mySqlConnection));
+            string dbConnection = Configuration["ConnectionString"];
+            System.Console.WriteLine(dbConnection);
+            services.AddDbContext<DatabaseContext>(options => 
+
+                options.UseSqlServer(dbConnection));
             
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -61,8 +63,8 @@ namespace MainApp
                 if(context.Airports.Take(1).ToList().Count == 0){ //check if DB was initialised already
                     Querier dbQuery = new Querier(context);
                     AirportDatabaseImporter importer = new AirportDatabaseImporter(env, dbQuery);
-                    //importer.ImportAirportData();
-                    //importer.ImportRunwayData();
+                    importer.ImportAirportData();
+                    importer.ImportRunwayData();
                 }
             }
 

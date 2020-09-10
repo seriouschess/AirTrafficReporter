@@ -61,7 +61,7 @@ ClientApp/src - Contains all frontend code written in AngularJS
 create a file called appsettings.json in the ./MainApp directory and add the following content with your sql root and password:
 ```yaml
 {
-  "ConnectionString": "server=localhost;userid=fakeuser;password=fakepassword;port=3306;database=relativitycapstone;SslMode=None",
+  "ConnectionString": "<Your remote db connection string>",
   "WeatherApiKey": "<Your openweather.org api key here>"
 }
 ```

@@ -16,15 +16,9 @@ namespace MainApp.Queries
         }
 
         //DB creation methods
-        public void AddAirport(Airport NewAirport){
-            dbContext.Add( NewAirport );
-            dbContext.SaveChanges();
-        }
-
-        public void AddFinalAirport(Airport NewAirport){ //save changes required
+        public void AddAirport(Airport NewAirport){ //save changes required
             dbContext.Add( NewAirport );
         }
-
 
         public void AddRunway(Runway NewRunway){ //save changes required
             dbContext.Add( NewRunway );
