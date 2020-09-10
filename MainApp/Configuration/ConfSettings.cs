@@ -4,6 +4,7 @@ namespace MainApp.Configuration
 {
     public class ConfSettings
     {
-        public static IConfiguration Configuration;
+        public static string ConnectionString;
+        public static string WeatherApiKey;
     }
 }

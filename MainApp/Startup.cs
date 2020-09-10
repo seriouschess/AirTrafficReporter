@@ -23,7 +23,8 @@ namespace MainApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            ConfSettings.Configuration = Configuration;
+            ConfSettings.ConnectionString = Configuration.GetConnectionString("ConnectionString");
+            ConfSettings.WeatherApiKey = Configuration.GetConnectionString("WeatherApiKey");
         }
 
         public IConfiguration Configuration { get; }
@@ -36,7 +37,7 @@ namespace MainApp
             );
 
             //Entity/MySQL
-            string dbConnection = Configuration["ConnectionString"];
+            string dbConnection = Configuration.GetConnectionString("ConnectionString");
             System.Console.WriteLine(dbConnection);
             services.AddDbContext<DatabaseContext>(options => 
 

@@ -19,10 +19,9 @@ namespace MainApp.Weather
         }
 
         public async Task<WeatherForecast> GetWeatherForLocation(double latitude, double longitude){
-            System.Console.WriteLine(ConfSettings.Configuration["WeatherApiKey:Value"]);
 
             HttpResponseMessage response = await _client.GetAsync(
-                $"https://api.openweathermap.org/data/2.5/forecast?lat={latitude}&lon={longitude}&APPID={ConfSettings.Configuration["WeatherApiKey"]}");
+                $"https://api.openweathermap.org/data/2.5/forecast?lat={latitude}&lon={longitude}&APPID={ConfSettings.WeatherApiKey}");
 
             if (response.IsSuccessStatusCode)
             {
