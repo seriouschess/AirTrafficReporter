@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "RelativityCapstone": {
+    "relativitycapstone": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -50,18 +50,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "RelativityCapstone:build"
+            "browserTarget": "relativitycapstone:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "RelativityCapstone:build:production"
+              "browserTarget": "relativitycapstone:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "RelativityCapstone:build"
+            "browserTarget": "relativitycapstone:build"
           }
         },
         "test": {
@@ -96,22 +96,20 @@
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": true
+              "extractLicenses": true
             },
             "production": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false
+              "extractLicenses": true
             }
           }
         }
       }
     },
-    "RelativityCapstone-e2e": {
+    "relativitycapstone-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -119,7 +117,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "RelativityCapstone:serve"
+            "devServerTarget": "relativitycapstone:serve"
           }
         },
         "lint": {
@@ -132,5 +130,5 @@
       }
     }
   },
-  "defaultProject": "RelativityCapstone"
+  "defaultProject": "relativitycapstone"
 }
