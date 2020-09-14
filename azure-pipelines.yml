@@ -3,6 +3,8 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
+
+
 trigger:
 - master
 
@@ -15,6 +17,11 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+# required action for Angular's caniuse-lite. It will be ok.
+- task: PowerShell@2
+  inputs:
+   errorActionPreference: 'continue'
+
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
