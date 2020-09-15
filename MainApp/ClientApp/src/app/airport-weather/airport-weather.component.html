@@ -1,8 +1,8 @@
 <div class = "weather-box">
-    <p> Forecast Date: {{ current_report.predictionDateString }} </p>
+    <p> Forecast Date: {{ current_report.predictionDateString }}</p>
     <p> Weather Description: {{ current_report.description }}</p>
-    <p> Temperature: {{ current_report.temperature }}</p>
-    <p> Wind Speed: {{ current_report.windSpeed }} </p>
+    <p> Temperature: {{ current_report.temperature }} K</p>
+    <p> Wind Speed: {{ current_report.windSpeed }} m/s</p>
     <h5> {{current_report.airplaneTakeoffDescription}} </h5>
     <app-compass [wind_direction]="current_report.windDirectionDeg" [display_flight_arrow]="display_flight_arrow" [runway_direction]="current_report.airplaneTakeoffAngle" ></app-compass>
     <p class="text-info"> Blue Arrow: wind direction </p>
