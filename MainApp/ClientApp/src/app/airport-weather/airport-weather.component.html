@@ -7,7 +7,7 @@
     <app-compass [wind_direction]="current_report.windDirectionDeg" [display_flight_arrow]="display_flight_arrow" [runway_direction]="current_report.airplaneTakeoffAngle" ></app-compass>
     <p class="text-info"> Blue Arrow: wind direction </p>
     <p class="text-dark"> Grey Arrow: airplane takeoff direction </p>
-    <button class="btn btn-info" (click)="decrementReportIndex()"> Previous Day's Weather </button>
-    <button class="btn btn-info weather-right-button" (click)="incrementReportIndex()" > Next Day's Weather </button>
+    <button *ngIf="weather_report_index < weather_reports.length -1" class="btn btn-info" (click)="incrementReportIndex()" > Next Day's Weather </button>
+    <button *ngIf="weather_report_index > 0" class="btn btn-info weather-left-button" (click)="decrementReportIndex()"> Previous Day's Weather </button>
 </div>
 
